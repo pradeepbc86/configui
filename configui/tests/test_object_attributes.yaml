@@ -1,0 +1,12 @@
+-!Int
+    name: Test 1
+    value: 41
+    mouseover_text: This is some mouseover text
+-!Int
+    name: Test 2
+    value: 65
+    mouseover_text: This is more mouseover text
+-!Int
+    name: Test 2
+    value: 99
+    mouseover_text: Overwriting mouseover text
