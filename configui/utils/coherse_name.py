@@ -1,7 +1,6 @@
 import string
 
 valid_characters = string.join([string.letters, string.digits, '_'], '')
-print valid_characters 
 def coherse_name(name):
     '''
     Formats a string to be a valid filename, striping out everything
