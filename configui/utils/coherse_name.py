@@ -6,8 +6,9 @@ def coherse_name(name):
     Formats a string to be a valid filename, striping out everything
     except for letters, digits, and '_'
     '''
-    _name = ''
-    for character in name:
+    cohersed_name = ''
+    space_replaced_name = name.replace(' ', '_')
+    for character in space_replaced_name:
         if character in valid_characters:
-            _name = string.join([_name,character],'')
-    return _name
+            cohersed_name = string.join([cohersed_name,character],'')
+    return cohersed_name

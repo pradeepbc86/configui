@@ -1,14 +1,3 @@
-class ValueObject(object):
-    def __init__(self, value):
-        self.value = value
-
-    def get_value(self):
-        return self._value
-
-    def set_value(self, new_value):
-        self._value = new_value
-
-    value = property(fget=get_value, fset=set_value)
 
 class Presenter(object):
     def __init__(self):
@@ -38,11 +27,3 @@ class Presenter(object):
     def add_delegated_attribute(self, attribute_name, attribute_object):
         self._daos[attribute_name] = attribute_object
         
-v = ValueObject(10)
-a = Presenter()
-a.add_delegated_attribute('x', v)
-print a.x
-a.x = 1000
-print v.value
-
-
