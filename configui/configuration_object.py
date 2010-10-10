@@ -8,16 +8,19 @@ class ConfigurationObject(Presenter):
         Presenter.__init__(self)
         for setting in settings_list:
             name = setting['name']
-            value = setting['value']
             del setting['name']
-            del setting['value']
 
+            if 'value' in setting.keys():
+                value = setting['value']
+                del setting['value']
+            else:
+                value = None
+
+            attribute_type = type_registry['default']
             if 'type' in setting.keys():
                 if setting['type'] in type_registry.keys():
                     attribute_type = type_registry[setting['type']]
-                else:
-                    attribute_type = type_registry['default']
-                attribute_object = attribute_type(value=value, 
-                                                  metadata=setting)
+            attribute_object = attribute_type(value=value, 
+                                              metadata=setting)
 
             self.add_delegated_attribute(name, attribute_object)

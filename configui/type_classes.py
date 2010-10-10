@@ -1,20 +1,24 @@
-import yaml
+
+import random
 
 class BasicAttribute(object):
     def __init__(self, value=None, metadata={}):
-        self.metadata = metadata
-        self.process_metadata()
+        actionable_attributes = {'mouseover_text': 'This is a Basic Attribute',
+                                 'style': None}
+        self.process_metadata(actionable_attributes, metadata)
         self._value = None
-        self.value = value
 
-    def process_metadata(self):
-        metadata = self.metadata
-        actionable_attributes = ['mouseover_text', 'style']
-        for attribute_name in actionable_attributes:
+    def process_metadata(self, actionable_attributes, metadata):
+        if hasattr(self, 'metadata'):
+            self.metadata.update(metadata)
+        else:
+            self.metadata = metadata
+
+        for attribute_name, default_value in actionable_attributes.items():
             if attribute_name in metadata.keys():
                 setattr(self, attribute_name, metadata[attribute_name])
             else:
-                setattr(self, attribute_name, None)
+                setattr(self, attribute_name, default_value)
 
     @property
     def value(self):
@@ -25,15 +29,12 @@ class BasicAttribute(object):
         self._value = new_value
 
 class IntAttribute(BasicAttribute):
-    def process_metadata(self):
-        BasicAttribute.process_metadata(self)
-        metadata = self.metadata
-        actionable_attributes = ['min_value', 'max_value']
-        for attribute_name in actionable_attributes:
-            if attribute_name in metadata.keys():
-                setattr(self, attribute_name, metadata[attribute_name])
-            else:
-                setattr(self, attribute_name, None)
+    def __init__(self, value=None, metadata={}):
+        BasicAttribute.__init__(self, value=value, metadata=metadata)
+        actionable_attributes = {'min_value': None, 
+                                 'max_value': None}
+        self.process_metadata(actionable_attributes, metadata)
+        self.value = value
 
     @property
     def value(self):
@@ -49,6 +50,26 @@ class IntAttribute(BasicAttribute):
             # TODO publish change
             self._value = int(new_value)
 
+class RandomNormalAttribute(BasicAttribute):
+    def __init__(self, value=None, metadata={}):
+        BasicAttribute.__init__(self, value=value, metadata=metadata)
+        actionable_attributes = {'average_value': 0.0, 
+                                 'standard_deviation': 1.0,
+                                 'recalculating': True}
+        self.process_metadata(actionable_attributes, metadata)
+
+    @property
+    def value(self):
+        if self.recalculating or self._value is None:
+            self._value = random.normalvariate(self.average_value, 
+                                               self.standard_deviation)
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        raise NotImplementedError('RandomNormalAttributes cannot be set.')
+
 type_registry = {'default':BasicAttribute,
-                 'int':IntAttribute}
+                 'int':IntAttribute,
+                 'random-normal': RandomNormalAttribute}
 
