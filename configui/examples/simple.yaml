@@ -1,0 +1,8 @@
+- alpha:
+    type: int
+- beta:
+    type: int
+    value: 43
+- gamma:
+    type: float
+

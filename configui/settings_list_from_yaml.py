@@ -3,9 +3,8 @@ import yaml
 
 from configui.utils.coherse_name import coherse_name
 
-def settings_list_from_yaml(yaml_filename):
-    with open(yaml_filename) as infile:
-        parsed_yaml = yaml.load(infile)
+def settings_list_from_yaml(yaml_file):
+    parsed_yaml = yaml.load(yaml_file)
     # TODO check for proper yaml formatting
     settings_list = []
     for settings_dict in parsed_yaml:
