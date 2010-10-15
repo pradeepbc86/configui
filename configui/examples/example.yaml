@@ -1,0 +1,20 @@
+- anint:
+    type: int
+    value: 33
+    min_value: 0
+    max_value: 100
+    mouseover_text: This is input 1.
+- afloat:
+    type: float
+    value: 33.333
+    mouseover_text: This is input 2.
+- arand:
+    type: random-normal
+- anotherrand:
+    type: random-normal
+    average_value: 10
+    standard_deviation: 1
+- nonrecalculatingrand:
+    type: random-normal
+    recalculating: False
+
